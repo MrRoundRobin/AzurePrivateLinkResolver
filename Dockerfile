@@ -12,6 +12,9 @@ COPY plugin.cfg /coredns
 RUN make gen \
     && make
 
+FROM scratch AS artifact
+COPY --from=builder /coredns/coredns /coredns
+
 FROM gcr.io/distroless/static AS APLR
 EXPOSE 53/tcp
 EXPOSE 53/udp
@@ -27,3 +30,4 @@ ENV NSID=""
 ENTRYPOINT ["/coredns/coredns"]
 LABEL org.opencontainers.image.authors="robin.mueller@outlook.de"
 LABEL org.opencontainers.image.title=AzurePrivateLinkResolver
+LABEL org.opencontainers.image.source = "https://github.com/MrRoundRobin/AzurePrivateLinkResolver"
