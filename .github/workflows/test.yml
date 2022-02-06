@@ -44,17 +44,20 @@ jobs:
 
       - name: Build and push Docker image
         id: build-and-push
-        uses: mr-smithers-excellent/docker-build-push@v5.6
+        uses: docker/docker-build-push@v2.9.0
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          #push: ${{ github.event_name != 'pull_request' }}
+          #tags: ${{ steps.meta.outputs.tags }}
+          #labels: ${{ steps.meta.outputs.labels }}
+          target: artifact
+          outputs:
+            – type=local,dest=out/
 
-      - name: Build artifacts
-        if: github.event_name != 'pull_request'
-        run: |
-          docker buildx build --target=artifact --output type=local,dest=$(pwd)/out/ -f Dockerfile .
+     # - name: Build artifacts
+      #  if: github.event_name != 'pull_request'
+        #run: |
+      #    docker buildx build --target=artifact --output type=local,dest=$(pwd)/out/ -f Dockerfile .
 
       - name: Upload release binaries
         if: github.event_name != 'pull_request'
