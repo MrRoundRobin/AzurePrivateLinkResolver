@@ -12,8 +12,29 @@ COPY plugin.cfg /coredns
 RUN make gen \
     && make
 
+FROM ubuntu AS deb
+RUN TZ=Europe/Berlin ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    apt-get install -y \
+        ca-certificates \
+        curl \
+        debhelper \
+        dh-systemd \
+        dpkg-dev \
+        jq \
+        lsb-release \
+        make
+WORKDIR /build/debian
+WORKDIR /build
+COPY packages/debian/* /build/debian/
+RUN chmod -x debian/*
+COPY --from=builder /coredns/coredns /build/
+COPY Corefile /build/debian/
+RUN dpkg-buildpackage -us -uc -b
+
 FROM scratch AS artifact
-COPY --from=builder /coredns/coredns /coredns
+COPY --from=builder /coredns/coredns /
+COPY --from=deb     /coredns_*.deb     /
 
 FROM gcr.io/distroless/static AS APLR
 EXPOSE 53/tcp

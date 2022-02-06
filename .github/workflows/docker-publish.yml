@@ -61,7 +61,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Push artifacts
+      - name: Build artifacts
         if: github.event_name != 'pull_request'
         run: |
           docker buildx build --target=artifact --output type=local,dest=$(pwd)/out/ -f Dockerfile .
