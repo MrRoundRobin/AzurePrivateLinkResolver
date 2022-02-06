@@ -42,7 +42,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push Docker image
+      - name: Build Packages
         id: build-and-push
         uses: docker/build-push-action@v2
         with:
@@ -51,7 +51,7 @@ jobs:
           #tags: ${{ steps.meta.outputs.tags }}
           #labels: ${{ steps.meta.outputs.labels }}
           target: artifact
-          outputs: "type=local,dest=out/"
+          outputs: "type=local,dest=$(pwd)/out/"
 
      # - name: Build artifacts
       #  if: github.event_name != 'pull_request'
