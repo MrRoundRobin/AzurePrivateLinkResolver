@@ -65,7 +65,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          asset_paths: '["./out/*"]'
+          asset_paths: '["out/*"]'
 
       - name: Output URL
         if: github.event_name != 'pull_request'
