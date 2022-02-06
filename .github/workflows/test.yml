@@ -51,8 +51,7 @@ jobs:
           #tags: ${{ steps.meta.outputs.tags }}
           #labels: ${{ steps.meta.outputs.labels }}
           target: artifact
-          outputs:
-            – type=local,dest=out/
+          outputs: "type=local,dest=out/"
 
      # - name: Build artifacts
       #  if: github.event_name != 'pull_request'
