@@ -4,6 +4,11 @@ Documentation=https://coredns.io
 After=network.target
 
 [Service]
+Environment="LOG_CLASS=all"
+Environment="CACHE_TTL=3600"
+Environment="NSID="
+Environment="ADDITIONAL_ZONES="
+Environment="ENABLE_IPV6=yes"
 PermissionsStartOnly=true
 LimitNOFILE=1048576
 LimitNPROC=512
