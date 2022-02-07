@@ -51,10 +51,10 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.event.inputs.version, 'v')
-        draft: true
-        prerelease: true
-        name: ${{ github.event.inputs.version }}
         with:
+          draft: true
+          prerelease: true
+          name: ${{ github.event.inputs.version }}
           files: out/*
 
       - name: Output URL
