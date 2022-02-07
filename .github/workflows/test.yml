@@ -1,5 +1,8 @@
 name: Test
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -51,6 +54,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.event.inputs.version, 'v')
+        id: upload
         with:
           draft: true
           prerelease: true
@@ -58,5 +62,4 @@ jobs:
           files: out/*
 
       - name: Output URL
-        if: github.event_name != 'pull_request'
-        run: echo '${{ steps.upload.outputs.browser_download_urls }}'
+        run: echo '${{ steps.upload.outputs.url }}'
