@@ -2,6 +2,10 @@ name: Test
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release'     
+        required: true
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -36,13 +40,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v3.6.2
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      - name: Build Packages
+      - name: Build
         id: build-and-push
         uses: docker/build-push-action@v2
         with:
@@ -50,14 +48,14 @@ jobs:
           target: artifact
           outputs: "type=local,dest=out/"
 
-      - name: Upload release binaries
-        if: github.event_name != 'pull_request'
-        id: upload
-        uses: alexellis/upload-assets@0.3.0
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.event.inputs.version, 'v')
+        draft: true
+        prerelease: true
+        name: ${{ github.event.inputs.version }}
         with:
-          asset_paths: '["out/coredns-forward","out/coredns-forward.deb","out/coredns-recursive","out/coredns-recursive.deb"]'
+          files: out/*
 
       - name: Output URL
         if: github.event_name != 'pull_request'
