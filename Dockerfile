@@ -51,6 +51,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         libunbound8 
 RUN rm -r /build/debian/*
 COPY src/recursive/debian/* /build/debian/
+RUN chmod -x debian/coredns.manpages
 COPY --from=builder-recursive /coredns/coredns /build/
 COPY src/recursive/Corefile /build/
 RUN dpkg-buildpackage -us -uc -b
