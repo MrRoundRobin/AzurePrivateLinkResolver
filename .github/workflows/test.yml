@@ -47,7 +47,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          target: artifact
+          target: artifacts
           outputs: "type=local,dest=out/"
 
       - name: Upload release binaries
