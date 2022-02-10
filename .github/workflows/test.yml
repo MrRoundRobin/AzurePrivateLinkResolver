@@ -58,8 +58,10 @@ jobs:
         with:
           draft: true
           prerelease: true
-          name: ${{ github.event.inputs.version }}
+          tag_name: ${{ github.event.inputs.version }}
           files: out/*
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
 
       - name: Output URL
         run: echo '${{ steps.upload.outputs.url }}'
