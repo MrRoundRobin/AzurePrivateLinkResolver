@@ -30,7 +30,7 @@ jobs:
 
       - name: Docker meta
         id: meta-recursive
-        uses: docker/metadata-action@v3.6.2
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
@@ -43,7 +43,7 @@ jobs:
 
       - name: Docker meta
         id: meta-forward
-        uses: docker/metadata-action@v3.6.2
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
