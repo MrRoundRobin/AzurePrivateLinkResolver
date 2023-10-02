@@ -1,6 +1,6 @@
 FROM golang:latest AS builder-forward
 WORKDIR /coredns
-ARG COREDNS_BRANCH=1.8.7
+ARG COREDNS_BRANCH=1.11.1
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && apt-get install -y \
         git \
@@ -15,7 +15,7 @@ RUN make gen \
 
 FROM builder-forward AS builder-recursive
 WORKDIR /coredns
-ARG COREDNS_BRANCH=1.8.7
+ARG COREDNS_BRANCH=1.11.1
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && apt-get install -y \
         gcc \
@@ -48,7 +48,7 @@ FROM deb-forward AS deb-recursive
 WORKDIR /build
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get install -y \
-        libunbound8 
+        libunbound8
 RUN rm -r /build/debian/*
 COPY src/recursive/debian/* /build/debian/
 RUN chmod -x debian/coredns.manpages
@@ -68,7 +68,7 @@ EXPOSE 53/udp
 EXPOSE 80/tcp
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get install -y \
-        libunbound8 
+        libunbound8
 WORKDIR /coredns
 COPY --from=builder-recursive /coredns/coredns /coredns/
 COPY src/recursive/Corefile /coredns/Corefile
