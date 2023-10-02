@@ -2,7 +2,7 @@
 
 include /usr/share/dpkg/architecture.mk
 
-VERSION :=  1.8.7
+VERSION :=  1.11.1
  #$(shell curl -s https://api.github.com/repos/coredns/coredns/releases/latest  | jq -r '.tag_name[1:length]')
 # Github is ratelimiting this API pretty aggresively, error when not set.
 ifeq ($(VERSION),null)

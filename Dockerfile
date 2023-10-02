@@ -81,6 +81,8 @@ ENTRYPOINT ["/coredns/coredns"]
 LABEL org.opencontainers.image.authors="robin.mueller@outlook.de"
 LABEL org.opencontainers.image.title=AzurePrivateLinkResolver-Recursive
 LABEL org.opencontainers.image.source = "https://github.com/MrRoundRobin/AzurePrivateLinkResolver"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.description="A CoreDNS Docker image that resolves Azure Private Link endpoints"
 
 FROM gcr.io/distroless/static AS aplr-forward
 EXPOSE 53/tcp
@@ -97,5 +99,7 @@ ENV PUBLIC_RESOLVER="1.1.1.1"
 ENV ENABLE_IPV6="yes"
 ENTRYPOINT ["/coredns/coredns"]
 LABEL org.opencontainers.image.authors="robin.mueller@outlook.de"
-LABEL org.opencontainers.image.title=AzurePrivateLinkResolver-Forward
-LABEL org.opencontainers.image.source = "https://github.com/MrRoundRobin/AzurePrivateLinkResolver"
+LABEL org.opencontainers.image.title=AzurePrivateLinkResolver
+LABEL org.opencontainers.image.source="https://github.com/MrRoundRobin/AzurePrivateLinkResolver"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.description="A CoreDNS Docker image that resolves Azure Private Link endpoints"

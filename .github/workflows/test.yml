@@ -34,12 +34,12 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            prefix=recursive,type=ref,event=branch
-            prefix=recursive,type=ref,event=pr
-            prefix=recursive,type=semver,pattern={{version}}
-            prefix=recursive,type=semver,pattern={{major}}.{{minor}}
-            prefix=recursive,type=semver,pattern={{major}}
-            prefix=recursive,type=sha
+            prefix=recursive-,type=ref,event=branch
+            prefix=recursive-,type=ref,event=pr
+            prefix=recursive-,type=semver,pattern={{version}}
+            prefix=recursive-,type=semver,pattern={{major}}.{{minor}}
+            prefix=recursive-,type=semver,pattern={{major}}
+            prefix=recursive-,type=sha
 
       - name: Docker meta
         id: meta-forward
@@ -97,14 +97,11 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: ${{ github.event_name != 'pull_request' }}
+        if: startsWith(github.ref, 'refs/tags/')
         id: upload
         with:
           draft: true
-          prerelease: true
-          tag_name: ${{ github.event.inputs.version }}
           files: out/*
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Output URL
         run: echo '${{ steps.upload.outputs.url }}'
